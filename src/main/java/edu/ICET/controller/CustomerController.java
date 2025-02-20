@@ -30,4 +30,14 @@ public class CustomerController {
         return service.getAll();
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteCustomer(@PathVariable Integer id){
+        service.deleteCustomer(id);
+
+    }
+
+    @PutMapping("update-customer")
+    public void updateCustomer(@RequestBody Customer customer){
+        service.updateCustomer(customer);
+    }
 }
