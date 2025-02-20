@@ -6,7 +6,6 @@ import edu.ICET.repository.CustomerRepository;
 import edu.ICET.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,5 +43,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void updateCustomer(Customer customer) {
         repository.save(mapper.map(customer, CustomerEntity.class));
+    }
+
+    @Override
+    public Customer searchById(Integer id) {
+        return mapper.map(repository.findById(id), Customer.class);
+    }
+
+    @Override
+    public List<Customer> searchbyName(String name) {
+        List<CustomerEntity> byName = repository.findByName(name);
+        List<Customer> customerList = new ArrayList<>();
+
+        byName.forEach(customerEntity -> {
+            customerList.add(mapper.map(customerEntity,Customer.class));
+        });
+        return customerList;
     }
 }
