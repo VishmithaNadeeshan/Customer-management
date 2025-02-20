@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -19,5 +22,17 @@ public class CustomerServiceImpl implements CustomerService {
 
         repository.save(mapper.map(customer, CustomerEntity.class));
 
+    }
+
+    @Override
+    public List<Customer> getAll() {
+        List<Customer> customerArrayList = new ArrayList<>();
+        List<CustomerEntity> all = repository.findAll();
+
+        all.forEach(customerEntity -> {
+            customerArrayList.add(mapper.map(customerEntity, Customer.class));
+        });
+
+        return customerArrayList;
     }
 }
